@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MK BET - Life is Easy</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0a0a0a;color:#fff}
+#loader{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,#006400,#000);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999}
+.logo{font-size:48px;font-weight:900;color:#FFD700;text-shadow:0 0 10px #FFD700}
+.logo span{color:#fff}
+.sub{margin:10px 0 30px;color:#ccc;font-size:14px}
+.bar{width:80%;height:12px;background:#222;border-radius:10px;overflow:hidden;border:1px solid #FFD700}
+#fill{height:100%;width:0%;background:linear-gradient(90deg,#FFD700,#00ff00);transition:width 0.3s}
+#percent{margin-top:12px;font-size:20px;color:#FFD700;font-weight:bold}
+#promo{margin-top:15px;font-size:12px;color:#aaa}
+.screen{display:none;padding:15px;min-height:100vh}
+.active{display:block}
+.card{background:#161616;border:1px solid #333;border-radius:12px;padding:15px;margin-bottom:15px}
+input{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #333;background:#000;color:#fff}
+.btn{width:100%;padding:13px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-weight:900;border:none;border-radius:10px;margin-top:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.game{background:#1e1e1e;border:1px solid #333;border-radius:12px;padding:10px;text-align:center}
+.game b{color:#FFD700}
+.badge{background:#00a000;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.balance{color:#FFD700;font-weight:900}
+</style>
+</head>
+<body>
+
+<!-- 50 SECONDS LOADING -->
+<div id="loader">
+<div class="logo">MK <span>BET</span></div>
+<div class="sub">Life is Easy With MK BET</div>
+<div class="bar"><div id="fill"></div></div>
+<div id="percent">1%</div>
+<div id="promo">Promoted by MK BET - Life is Easy</div>
+</div>
+
+<!-- REGISTER -->
+<div id="registerScreen" class="screen">
+<div class="card">
+<h2 style="color:#FFD700;text-align:center">MK BET - REGISTER</h2>
+<p style="text-align:center;font-size:12px;color:#aaa;margin:5px 0 15px">Register & Get ₦3,000 Bonus</p>
+<input id="phone" placeholder="Phone Number (e.g 080...)" type="tel">
+<input id="email" placeholder="Gmail Address" type="email">
+<input id="pass" placeholder="Create Password" type="password">
+<input id="invite" placeholder="Invite Code (Get ₦3,000)">
+<button class="btn" onclick="register()">REGISTER & CLAIM ₦3,000</button>
+<p style="font-size:11px;color:#888;margin-top:10px;text-align:center">Already have account? <span style="color:#FFD700" onclick="showDash()">Login</span></p>
+</div>
+<div class="card">
+<h3>🎁 Daily Check-In</h3>
+<p style="font-size:12px">Day1 ₦50 | Day2 ₦80 | Day3 ₦120 | Day4 ₦200 | Day5 ₦300 | Day6 ₦400 | Day7 ₦500 | Day8 ₦600 | Day9 ₦650 | Day10 ₦700</p>
+<button class="btn" style="background:#222;color:#FFD700;border:1px solid #FFD700" onclick="checkIn()">Check-In Today</button>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashScreen" class="screen">
+<div class="top">
+<div><b>MK BET</b> <span class="badge">LIVE</span></div>
+<div class="balance">₦<span id="bal">3000</span></div>
+</div>
+<div class="card">
+<h3>🔥 17 Hot Games</h3>
+<div class="grid" id="gamesGrid"></div>
+</div>
+
+<!-- FORTUNE MICKEY GAME -->
+<div class="card" id="mickeyBox">
+<h3 style="color:#FFD700">🐭 Fortune Mickey - SPECIAL</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0;font-size:30px;text-align:center;background:#000;padding:15px;border-radius:10px" id="slots">
+<div>🍯</div><div>🍃</div><div>💰</div>
+<div>🍊</div><div>🐭</div><div>🍯</div>
+<div>💰</div><div>🍃</div><div>🍊</div>
+</div>
+<p style="font-size:12px;color:#aaa">Golden Pot 🍯 Green Leaf 🍃 Bag 💰 Orange 🍊 Mickey 🐭</p>
+<button class="btn" onclick="spin()">SPIN ₦100</button>
+<button class="btn" style="background:#222;color:#fff" onclick="spinTurbo()">TURBO SPIN ⚡</button>
+<p id="winMsg" style="text-align:center;margin-top:10px;color:#00ff00;font-weight:bold"></p>
+</div>
+</div>
+
+<script>
+// 50 seconds loader 1% to 100%
+let p=1;
+let fill=document.getElementById('fill');
+let perc=document.getElementById('percent');
+let loader=document.getElementById('loader');
+let interval=setInterval(()=>{
+p++;
+fill.style.width=p+'%';
+perc.innerText=p+'%';
+if(p>=100){
+clearInterval(interval);
+loader.style.display='none';
+document.getElementById('registerScreen').classList.add('active');
+}
+},500); // 500ms * 100 = 50000ms = 50 seconds
+
+let balance=3000;
+const games=["Fortune Tiger 🐯","Fortune Mickey 🐭","Aviator ✈️","Crash 🚀","Dice 🎲","Mines 💣","Plinko 🔴","Chicken 🐔","Penalty ⚽","Fortune Rabbit 🐰","Fortune Dragon 🐉","Gates of Olympus ⚡","Sweet Bonanza 🍬","Football 🏆","Basketball 🏀","Spin Wheel 🎡","Lucky 7️⃣"];
+
+let grid=document.getElementById('gamesGrid');
+games.forEach(g=>{
+let d=document.createElement('div');
+d.className='game';
+d.innerHTML=`<b>${g}</b><br><span style="font-size:11px;color:#aaa">DEMO</span><br><button style="margin-top:6px;padding:6px 12px;background:#FFD700;border:none;border-radius:6px;font-weight:bold;font-size:11px" onclick="playGame('${g}')">PLAY</button>`;
+grid.appendChild(d);
+});
+
+function register(){
+let ph=document.getElementById('phone').value;
+let em=document.getElementById('email').value;
+if(ph.length<10||!em.includes('@')){alert('Enter valid Phone and Gmail');return;}
+balance=3000;
+document.getElementById('bal').innerText=balance;
+alert('Success! ₦3,000 Bonus Credited - Welcome to MK BET');
+showDash();
+}
+function showDash(){
+document.getElementById('registerScreen').classList.remove('active');
+document.getElementById('dashScreen').classList.add('active');
+}
+function checkIn(){
+balance+=50;
+document.getElementById('bal').innerText=balance;
+alert('Day1 Check-In Success! ₦50 added');
+}
+function playGame(name){
+if(name.includes('Mickey')){
+document.getElementById('mickeyBox').scrollIntoView({behavior:'smooth'});
+}else{alert(name+' is coming soon! Play Fortune Mickey now - special for MK BET');}
+}
+const icons=['🍯','🍃','💰','🍊','🐭'];
+function spin(){
+if(balance<100){alert('Low balance!');return;}
+balance-=100;
+document.getElementById('bal').innerText=balance;
+let slots=document.getElementById('slots').children;
+for(let i=0;i<slots.length;i++){slots[i].innerText=icons[Math.floor(Math.random()*icons.length)];}
+let win=Math.random()>0.6;
+if(win){let amt=Math.floor(Math.random()*500)+100;balance+=amt;document.getElementById('bal').innerText=balance;document.getElementById('winMsg').innerText='WIN ₦'+amt+'! 🐭🍯';}else{document.getElementById('winMsg').innerText='Try Again!';}
+}
+function spinTurbo(){
+for(let i=0;i<5;i++)setTimeout(spin,i*200);
+}
+</script>
+</body>
+</html>
