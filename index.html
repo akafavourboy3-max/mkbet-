@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MK GAMES - Sporty Replica</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}body{background:#0e0e0e;color:#fff;padding-bottom:65px}
+.h{background:#d90c0c;display:flex;justify-content:space-between;align-items:center;padding:10px 12px;position:sticky;top:0;z-index:10}
+.bal{background:#0008;border:1px solid #fff5;padding:6px 12px;border-radius:8px;font-weight:900;font-size:13px}
+.search{background:#171717;padding:8px 12px;display:flex;gap:8px}
+.search input{flex:1;background:#222;border:1px solid #333;border-radius:20px;padding:9px 14px;color:#fff}
+.tag{background:#ffce00;color:#000;padding:4px 10px;border-radius:4px;font-weight:900;font-size:11px;margin:12px;display:inline-block}
+.sec{padding:10px 12px 6px;font-weight:900;font-size:13px;display:flex;justify-content:space-between}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:0 12px}
+.card{background:#1c1c1c;border-radius:10px;overflow:hidden;border:1px solid #252525}
+.card.img{height:90px;display:flex;align-items:center;justify-content:center;font-size:38px;position:relative}
+.card.img i{position:absolute;top:5px;left:5px;background:red;color:#fff;font-size:10px;padding:2px 5px;border-radius:3px;font-style:normal;font-weight:900}
+.card p{font-size:10px;text-align:center;padding:6px;white-space:nowrap;overflow:hidden}
+.nav{position:fixed;bottom:0;width:100%;background:#151515;border-top:1px solid #222;display:flex;justify-content:space-around;padding:6px 0;z-index:50}
+.nav div{font-size:10px;text-align:center;color:#666}.nav.a{color:#fff}
+#initLoad{position:fixed;inset:0;background:#000;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#barW{width:85%;height:5px;background:#222;border-radius:10px;margin-top:20px;overflow:hidden}#barF{height:100%;width:0;background:#d90c0c}
+#gamePage{position:fixed;inset:0;background:#0a0a0a;z-index:100;display:none;flex-direction:column}
+#loadGame{position:absolute;inset:0;background:#000;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.betBox{background:#1a1a1a;margin:8px;border-radius:12px;padding:10px;border:1px solid #222}
+.betBtn{width:100%;padding:13px;border:none;border-radius:8px;font-weight:900;font-size:16px}
+.green{background:#00c851;color:#fff}.orange{background:#ff6a00;color:#fff}
+#multi{font-size:56px;font-weight:900;text-align:center;color:#d90c0c}
+</style></head><body>
+<div id="initLoad"><div style="opacity:0.07;font-size:120px;font-weight:900">S</div><div style="margin-top:-40px"><b>Sporty</b> <span style="background:#d90c0c;padding:2px 7px;border-radius:4px">GAMES</span></div><div id="barW"><div id="barF"></div></div><small id="pct">0%</small></div>
+
+<div id="home">
+<div class="h"><b>MK <span style="background:#fff;color:#d90c0c;padding:1px 5px;border-radius:3px">GAMES</span></b><div class="bal">NGN <span id="bal">5.23</span></div></div>
+<div class="search"><input placeholder="Search games"><div style="background:#fff;color:#000;padding:8px 14px;border-radius:18px;font-size:12px;font-weight:900">🏠 Home</div></div>
+<div style="display:flex;gap:8px;overflow:auto;padding:10px 12px"><div style="min-width:160px;height:80px;background:linear-gradient(45deg,#222,#444);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900">Bet & Get</div><div style="min-width:160px;height:80px;background:linear-gradient(45deg,#400,#a00);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900">Crash Mania</div></div>
+<div class="sec"><span>Top 6 Games in Nigeria</span></div><div class="grid" id="gTop"></div>
+<div class="tag">GAMES OF THE WEEK</div><div style="margin:0 12px;height:105px;border-radius:12px;background:linear-gradient(90deg,#111,#333);display:flex;align-items:center;justify-content:center">🐯 FOREST OF FEAR & TIGER RICHES</div>
+<div class="sec"><span>Crash Games</span><span style="color:#d90c0c">Show All</span></div><div class="grid" id="gCrash"></div>
+<div class="sec"><span>PG Slot Games - Fortune Series</span><span style="color:#d90c0c">Show All</span></div><div class="grid" id="gPG"></div>
+<div class="sec"><span>Quick Games</span></div><div class="grid" id="gQuick"></div>
+<div class="sec"><span>Slot Games</span></div><div class="grid" id="gSlot"></div>
+</div>
+
+<div id="me" style="display:none">
+<div class="h"><b>ME</b><div class="bal">NGN <span class="bal2">5.23</span></div></div>
+<div style="padding:25px;text-align:center"><div style="font-size:45px">👤</div><div id="phone">080****1234</div></div>
+<div style="background:#151515">
+<div style="padding:14px;border-bottom:1px solid #222;display:flex;justify-content:space-between"><span>💰 Balance</span><b style="color:#ffce00">NGN <span class="bal2">5.23</span></b></div>
+<div style="padding:14px;border-bottom:1px solid #222;display:flex;justify-content:space-between"><span>🎁 Bonus</span><b style="color:#0f0">NGN 3000</b></div>
+<div style="padding:14px;border-bottom:1px solid #222;display:flex;justify-content:space-between"><span>📅 Check-In</span><b style="color:#d90c0c" onclick="daily()">Claim ₦50</b></div>
+<div style="padding:14px;border-bottom:1px solid #222;display:flex;justify-content:space-between"><span>🚪 Logout</span><b onclick="location.reload()">Exit</b></div>
+</div>
+</div>
+
+<div id="gamePage">
+<div class="h" style="background:#111"><span onclick="closeG()" style="font-size:22px">✕</span><b id="gTitle">Aviator</b><span>⋯</span></div>
+<div id="loadGame"><div style="font-size:50px" id="loadIcon">✈️</div><h3 id="loadName" style="margin-top:10px">Loading Aviator</h3><div id="barW" style="margin-top:20px;width:70%"><div id="loadBar" style="height:5px;background:#d90c0c;width:0%"></div></div><b id="loadPct" style="margin-top:10px">1%</b></div>
+
+<div id="crashUI" style="flex:1;display:none;flex-direction:column">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(#111,#000)">
+<div id="multi">1.00x</div><small id="stat">POWERING UP FOR NEXT ROUND</small>
+<div style="font-size:70px;margin-top:10px" id="jet">✈️</div>
+<div style="width:80%;height:5px;background:#222;border-radius:10px;margin-top:15px"><div id="prog" style="height:100%;width:10%;background:#d90c0c"></div></div>
+</div>
+<div class="betBox"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px"><span>Min 10 Max 500000</span><span>Balance: NGN <span class="bal2">5.23</span></span></div><div style="display:flex;gap:8px"><input id="bet1" value="50" style="flex:1;padding:10px;border-radius:8px;background:#000;color:#fff;border:1px solid #333;text-align:center"><button id="btn1" class="betBtn green" onclick="bet(1)">BET<br><small>NGN 50.00</small></button></div></div>
+<div class="betBox"><div style="display:flex;gap:8px"><input id="bet2" value="50" style="flex:1;padding:10px;border-radius:8px;background:#000;color:#fff;border:1px solid #333;text-align:center"><button id="btn2" class="betBtn green" onclick="bet(2)">BET<br><small>NGN 50.00</small></button></div></div>
+</div>
+
+<div id="slotUI" style="flex:1;display:none;flex-direction:column">
+<div style="flex:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:20px;align-content:center" id="reels"></div>
+<div class="betBox"><div style="text-align:center;margin-bottom:10px"><b>WIN: NGN <span id="winAmt">0.00</span></b></div><div style="display:flex;gap:8px"><input id="betS" value="20" style="flex:1;padding:12px;border-radius:8px;background:#000;color:#fff;border:1px solid #333;text-align:center"><button class="betBtn orange" onclick="spin()">SPIN<br><small id="spinBet">NGN 20</small></button></div></div>
+</div>
+
+</div>
+
+<div class="nav"><div class="a" onclick="show('home')">💲<br>Home</div><div>☰<br>AZ Menu</div><div class="a" onclick="show('home')">🎮<br>Games</div><div>📋<br>Open Bets</div><div onclick="show('me')">👤<br>Me</div></div>
+
+<script>
+let bal=5.23;let bf=document.getElementById('barF'),pct=document.getElementById('pct'),init=document.getElementById('initLoad');
+let p=0;let iv=setInterval(()=>{p+=2;bf.style.width=p+'%';pct.innerText=p+'%';if(p>=100){clearInterval(iv);init.style.display='none'}},30);
+
+const gamesTop=[{n:'Aviator',i:'✈️',t:'crash',c:'#ff3b3b'},{n:'Sporty Hero',i:'🦸',t:'slot',c:'#7b61ff'},{n:'Sporty Jet',i:'🚀',t:'crash',c:'#00aaff'},{n:'Spin Bottle',i:'🍾',t:'slot',c:'#00c853'},{n:'Hot to Burn',i:'🔥',t:'slot',c:'#ff6a00'},{n:'Sporty Kick',i:'⚽',t:'slot',c:'#00ff88'}];
+const gamesCrash=[{n:'Skyward',i:'☁️',t:'crash'},{n:'JetX',i:'🛩️',t:'crash'},{n:'Crash Mania',i:'💥',t:'crash'}];
+const gamesPG=[{n:'Fortune Tiger',i:'🐯',t:'slot',c:'#ff9c00'},{n:'Tiger Riches',i:'🐅',t:'slot',c:'#ffb700'},{n:'Fortune Rabbit',i:'🐰',t:'slot',c:'#ff5e00'},{n:'Gates of Olympus',i:'⚡',t:'slot',c:'#7b61ff'},{n:'Sweet Bonanza',i:'🍭',t:'slot',c:'#ff6ab1'},{n:'Fortune Ox',i:'🐂',t:'slot',c:'#d4a017'}];
+const gamesQuick=[{n:'Penalty',i:'🥅',t:'slot'},{n:'1Punch',i:'🥊',t:'slot'},{n:'Mines',i:'💣',t:'slot'}];
+const gamesSlot=[{n:'Skyward',i:'🎰',t:'slot'},{n:'Big Bass',i:'🎣',t:'slot'},{n:'Book of Ra',i:'📖',t:'slot'}];
+
+function grid(id,list){let el=document.getElementById(id);list.forEach((g,i)=>{let d=document.createElement('div');d.className='card';d.innerHTML=`<div class=img style="background:${g.c||'#222'}"><i>${i+1}</i>${g.i}</div><p>${g.n}</p>`;d.onclick=()=>openG(g);el.appendChild(d);});}
+grid('gTop',gamesTop);grid('gCrash',gamesCrash);grid('gPG',gamesPG);grid('gQuick',gamesQuick);grid('gSlot',gamesSlot);
+
+function show(id){document.getElementById('home').style.display=id=='home'?'block':'none';document.getElementById('me').style.display=id=='me'?'block':'none';}
+
+let curType='crash',curBet=0,mult=1,fly=false,betActive=[false,false];
+function openG(g){document.getElementById('gamePage').style.display='flex';document.getElementById('gTitle').innerText=g.n;curType=g.t;document.getElementById('loadIcon').innerText=g.i;document.getElementById('loadName').innerText='Loading '+g.n;document.getElementById('crashUI').style.display='none';document.getElementById('slotUI').style.display='none';document.getElementById('loadGame').style.display='flex';
+let lp=1,bar=document.getElementById('loadBar'),tp=document.getElementById('loadPct');
+let li=setInterval(()=>{lp+=Math.random()*8+2;if(lp>100)lp=100;bar.style.width=lp+'%';tp.innerText=Math.floor(lp)+'%';if(lp>=100){clearInterval(li);document.getElementById('loadGame').style.display='none';if(curType=='crash'){document.getElementById('crashUI').style.display='flex';startCrash();}else{document.getElementById('slotUI').style.display='flex';initSlot(g);}}},40);
+}
+
+function closeG(){document.getElementById('gamePage').style.display='none';fly=false;}
+
+function startCrash(){mult=1;fly=false;betActive=[false,false];document.getElementById('multi').innerText='1.00x';document.getElementById('multi').style.color='#d90c0c';document.getElementById('stat').innerText='POWERING UP FOR NEXT ROUND';document.getElementById('prog').style.width='5%';let w=5;let pw=setInterval(()=>{w+=4;document.getElementById('prog').style.width=w+'%';if(w>=100){clearInterval(pw);runFly();}},80);}
+
+function runFly(){fly=true;let t=setInterval(()=>{if(!fly){clearInterval(t);return;}mult+=0.02+mult*0.005;document.getElementById('multi').innerText=mult.toFixed(2)+'x';
+if(betActive[0]){document.getElementById('btn1').innerHTML='CASHOUT<br><small>NGN '+(curBet*mult).toFixed(2)+'</small>';}
+if(betActive[1]){document.getElementById('btn2').innerHTML='CASHOUT<br><small>NGN '+(curBet*mult).toFixed(2)+'</small>';}
+if(Math.random()<0.012){fly=false;document.getElementById('multi').style.color='red';document.getElementById('stat').innerText='FLEW AWAY! '+mult.toFixed(2)+'x';betActive=[false,false];document.getElementById('btn1').innerHTML='BET<br><small>NGN 50.00</small>';document.getElementById('btn1').className='betBtn green';document.getElementById('btn2').innerHTML='BET<br><small>NGN 50.00</small>';document.getElementById('btn2').className='betBtn green';clearInterval(t);setTimeout(startCrash,3000);}
+},70);}
+
+function bet(n){let amt=parseFloat(document.getElementById('bet'+n).value);if(bal<amt){alert('Low balance');return;}
+if(betActive[n-1]){// cashout
+let win=amt*mult;bal+=win;upd();document.getElementById('btn'+n).innerHTML='BET<br><small>NGN '+amt+'.00</small>';document.getElementById('btn'+n).className='betBtn green';betActive[n-1]=false;alert('Cashed out NGN '+win.toFixed(2)+' at '+mult.toFixed(2)+'x');
+}else{
+bal-=amt;curBet=amt;betActive[n-1]=true;upd();document.getElementById('btn'+n).innerHTML='CASHOUT<br><small>NGN '+(amt*mult).toFixed(2)+'</small>';document.getElementById('btn'+n).className='betBtn orange';
+}
+}
+
+function initSlot(g){let reels=document.getElementById('reels');reels.innerHTML='';for(let i=0;i<9;i++){let d=document.createElement('div');d.style.cssText='height:80px;background:#222;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:30px;border:1px solid #333';d.innerText=['🐯','💰','🍒','7️⃣','⭐'][Math.floor(Math.random()*5)];reels.appendChild(d);}}
+function spin(){let amt=parseFloat(document.getElementById('betS').value);if(bal<amt){alert('Low');return;}bal-=amt;upd();let reels=document.getElementById('reels').children;let win=0;let syms=['🐯','💰','🍒','7️⃣','⭐'];for(let r of reels){r.innerText=syms[Math.floor(Math.random()*syms.length)];}
+setTimeout(()=>{if(Math.random()<0.4){win=amt*(Math.random()*5+2);bal+=win;document.getElementById('winAmt').innerText=win.toFixed(2);}else{document.getElementById('winAmt').innerText='0.00';}},300);}
+
+function upd(){document.getElementById('bal').innerText=bal.toFixed(2);document.querySelectorAll('.bal2').forEach(e=>e.innerText=bal.toFixed(2));}
+function daily(){bal+=50;upd();alert('Daily +₦50');}
+</script></body></html>
